@@ -143,6 +143,12 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
+# file types
+*.csv
+
+# IDE
+.idea
+
 # mkdocs documentation
 /site
 
