@@ -7,20 +7,20 @@ import os
 def normalizer() -> str:
     load_dotenv()
 
-    # This is actually my prompt template
     template = """Text: {text}
-    Task: I will provide you a raw text which include Names. Please extract ONLY the name. Ignore any special character.
-    Don't include your whole chain of thought.
-    Answer like this:
-    Final answer: <TheName>
+    Please make a normalization to the provided text. 
+    Remove unnecessary characters and provide the ONLY the name and the surname of the person
+    Answer like:
+    <Name Surname>
     """
+
     # Load environment variables from the .env file.
     prompt = ChatPromptTemplate.from_template(template)  # Create a prompt template.
     base_url = os.getenv("OLLAMA_BASE_URL", "http://host.docker.internal:11434")
 
     # Initialize the model you want to use llama3/or deepseek-r1:7b and the base URL of the ollama running on your
     # localhost.
-    model = OllamaLLM(model="llama3", base_url=base_url)
+    model = OllamaLLM(model="llama3.1:8b-instruct-q4_0", base_url=base_url)
 
     # Create a chain of prompt template and model.
     chain = prompt | model

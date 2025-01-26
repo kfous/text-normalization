@@ -1,20 +1,30 @@
-# text-normalization
+# Text Normalization System Using Ollama
 
-This is an application ran with llama3 enabling text normalization through a dataset of your choice.
-The process can be run in a docker environment where a MongoDb is initialized and connect to your local ollama.
+This is an application running with llama3 that enables text normalization on a dataset of your choice.
+It can be run in a Docker environment where a MongoDB instance is initialized and connected to your local Ollama.
 
-1. Download ollama
-2. ollama run deepseek-r1:7b
-3. ollama run llama3.2
-4. Install docker desktop
+![ollamadocker.jpg](..%2F..%2FPictures%2Follamadocker.jpg)
+
+1. Download [Ollama](https://ollama.com/)  
+2. Run:  
+   ```bash
+   ollama run llama3.1:8b-instruct-q4_0
+4. Install [Docker Desktop](https://www.docker.com/)
 5. Create a virtual environment 
-- python -m install virtualenv venv
-- make sure it is integrated as your interprepter e.g. if you are using PyCharm
-6. Enable it
-- ./venv/Scripts/activate for windows
-- ./venv/bin/activate for Unix based systems
-6.Install requirements.txt
-7.Install Studio 3T to access the docker container mongo
-8.Hit docker-compose up --build
-9.Connect to mongo through Studio 3T
-101.run in intelishel db.normalized_collection.find({}) to check the inserted data
+   ```bash
+    python -m install virtualenv venv
+- Make sure it is integrated as your interpreter (e.g. in PyCharm)
+6. Activate the virtual environment
+- Windows: ***./venv/Scripts/activate*** 
+- Unix: ***./venv/bin/activate*** 
+7. Install dependencies
+   ```bash
+    pip install -r requirements.txt
+8. Install [Studio 3T](https://studio3t.com) to access MongoDB container
+9. Run Docker Compose
+   ```bash
+    docker-compose up --build
+10. Connect to MongoDB through Studio 3T at ***localhost:27017*** 
+11. In IntelliShell run the below command and verify data inserted:
+   ```bash
+    db.normalized_collection.find({})
