@@ -1,5 +1,4 @@
-
-
+# A function calculating performance of batch insert operations
 def calculate_performance(s, e):
     performance_seconds = e - s
     # Convert seconds to hours and minutes

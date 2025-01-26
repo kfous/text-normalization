@@ -29,6 +29,10 @@ Docker is used to spin up a MongoDB instance for this project.
    docker-compose up -d
    ```
 9. **Connect to MongoDB** through Studio 3T at `localhost:27017`
+10. **Run the clean data script**
+    ```bash
+    python ./scripts/clean_data.py
+    ```
 10. **Run the insert script**  
     ```bash
     python ./scripts/db_insert.py

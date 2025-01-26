@@ -22,7 +22,9 @@ def normalizer(raw_text) -> str:
 
     # Initialize the model you want to use llama3/or deepseek-r1:7b and the base URL of the ollama running on your
     # localhost.
-    model = OllamaLLM(model="llama3.1:8b-instruct-q4_0", base_url='http://localhost:11434')
+    model = OllamaLLM(
+        model="llama3.1:8b-instruct-q4_0", base_url="http://localhost:11434"
+    )
 
     # Create a chain of prompt template and model.
     chain = prompt | model
