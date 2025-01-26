@@ -1,11 +1,7 @@
-torch
 tokenizers
 transformers
-accelerate
-pebble
-timeout-decorator
-attrdict
 pymongo
 langchain-core
 langchain-ollama
 python-dotenv
+pandas
