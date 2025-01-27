@@ -10,34 +10,34 @@ Docker is used to spin up a MongoDB instance for this project.
    ```bash
    ollama run llama3.1:8b-instruct-q4_0
    ```
-3. **Install [Docker Desktop](https://www.docker.com/)**  
-4. **Create a virtual environment**  
+3. **Create a virtual environment**  
    ```bash
    python -m install virtualenv venv
    ```
-   - Make sure it is integrated as your interpreter (e.g., in PyCharm).
-5. **Activate the virtual environment**  
+   - Make sure it is integrated as your interpreter (e.g. in PyCharm).
+4. **Activate the virtual environment**  
    - **Windows**: `.\venv\Scripts\activate`  
    - **Unix**: `./venv/bin/activate`
-6. **Install dependencies**  
+5. **Install dependencies**  
    ```bash
    pip install -r requirements.txt
    ```
-7. **Install [Studio 3T](https://studio3t.com)** to query MongoDB  
-8. **Run Docker Compose**  
-   ```bash
-   docker-compose up -d
-   ```
-9. **Connect to MongoDB** through Studio 3T at `localhost:27017`
-10. **Run the clean data script**
+6. Create a .env file and paste environment variable for OPEN_AI_API_KEY:
+    ```
+    echo "OPENAI_API_KEY=<your-key>" >> .env
+    ```
+7. Add a dataset named ***raw_data.csv*** in the dataset directory
+6. **Run the clean data script**
     ```bash
     python ./scripts/clean_data.py
     ```
-10. **Run the insert script**  
+   - This will generate a cleaned_data.csv in dataset directory
+7. **Run any of the LLM clean script**  
     ```bash
-    python ./scripts/db_insert.py
+    python ./scripts/ollama_clean_data.py
     ```
-11. **In IntelliShell**, run the following to verify inserted data:  
-    ```js
-    db.normalized_collection.find({})
+   or
+    ```bash
+    python ./scripts/openai_clean_data.py
     ```
+   - ***This will require an OPENAI_API_KEY***

@@ -1,8 +1,10 @@
 tokenizers
 transformers
 pymongo
+langchain-community
 langchain-core
 langchain-ollama
+langchain-openai
 python-dotenv
 pandas
 regex

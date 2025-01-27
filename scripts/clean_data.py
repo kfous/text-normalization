@@ -1,3 +1,10 @@
+"""""
+First script in the cleaning process.
+It will parse the original dataset and clean it:
+1. Using a rule based approach with regex patterns
+2. Using a NER validation to identify name entities
+""" ""
+
 import pandas as pd
 import regex as re
 import spacy
@@ -12,7 +19,7 @@ def rule_based_clean(name):
     PLACEHOLDERS = {
         "<unknown>",
         "unknown",
-        "traditional",
+        "uknown" "traditional",
         "copyright control",
         "?",
         "will provide later",
