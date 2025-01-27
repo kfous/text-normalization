@@ -3,7 +3,7 @@
 This is a system running with **llama3**, enabling text normalization on a dataset of your choice.  
 Docker is used to spin up a MongoDB instance for this project.
 
-<img src='images/ollamadocker.jpg' alt='Penguins' width="800">
+<img src='images/tools.png' alt='Penguins' width="800">
 
 1. **Download [Ollama](https://ollama.com/)**  
 2. **Run Ollama**  
