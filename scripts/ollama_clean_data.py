@@ -1,7 +1,7 @@
 """""
 As a second step you can further clean the data with an LLM model.
 In this script llama3.1 of 8billion parameters and 4-quantiazation was used (based on my hardware specs)
-""" ""
+"""""
 
 import timeit
 import pandas as pd
@@ -32,7 +32,8 @@ def normalizer(raw_text) -> str:
     # Initialize the model you want to use llama3/or deepseek-r1:7b and the base URL of the ollama running on your
     # localhost.
     model = OllamaLLM(
-        model="llama3", base_url="http://localhost:11434", temprature=0.00001)
+        model="llama3", base_url="http://localhost:11434", temprature=0.00001
+    )
 
     # Create a chain of prompt template and model.
     chain = prompt | model
