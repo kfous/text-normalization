@@ -1,9 +1,12 @@
 import logging
+import sys
 
 
-def setup_logger():
+def setup_logger(name=__name__, level=logging.INFO):
+    logger = logging.getLogger(name)
+
     # Create a logger
-    logger = logging.getLogger("my_logger")
+
     logger.setLevel(logging.DEBUG)
 
     # Create the handler

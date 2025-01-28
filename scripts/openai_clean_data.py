@@ -15,7 +15,7 @@ from langchain.schema.messages import HumanMessage, SystemMessage
 from dotenv import load_dotenv
 
 # Init logger
-logger = setup_logger()
+logger = setup_logger("main_logger")
 
 
 # Function responsible for calling normalizer per chunk size
@@ -105,7 +105,7 @@ if __name__ == "__main__":
 
     # Pick a chunk size to process the dataset information
     # Chunk size will determine the batch process capacity
-    chunk_size = 100
+    CHUNK_SIZE = 100
 
     # A flag used for the output csv, e.g. when true it will import headers
     first_chunk = True
@@ -114,7 +114,7 @@ if __name__ == "__main__":
     start_time_10k = timeit.default_timer()
     logger.info("Operation batch insert starting...")
     # Insert in chunks of 100 in database
-    for chunk in pd.read_csv(csv_path, chunksize=chunk_size):
+    for chunk in pd.read_csv(csv_path, chunksize=CHUNK_SIZE):
         start_time_500 = timeit.default_timer()
 
         # Replace empty values with string

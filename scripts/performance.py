@@ -1,4 +1,9 @@
 # A function calculating performance of batch insert operations
+from logger import setup_logger
+
+logger = setup_logger(__name__)
+
+
 def calculate_performance(s, e):
     performance_seconds = e - s
     # Convert seconds to hours and minutes
@@ -11,4 +16,4 @@ def calculate_performance(s, e):
             hours, minutes, seconds
         )
     )
-    print("{}".format(performance_message))
+    logger.info("{}".format(performance_message))
