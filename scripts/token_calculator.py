@@ -26,10 +26,6 @@ if __name__ == "__main__":
     input_price_per_1k_tokens = 0.0015
     output_price_per_1k_tokens = 0.002
 
-    # # Deepseek-chat pricing 8k context length
-    # input_price_per_1k_tokens = 0.014
-    # output_price_per_1k_tokens = 0.14
-
     # Calculate the cost for input and output
     input_cost = calculate_cost(total_tokens, input_price_per_1k_tokens)
     output_cost = calculate_cost(total_tokens, output_price_per_1k_tokens)

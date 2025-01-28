@@ -9,9 +9,14 @@ import pandas as pd
 import regex as re
 import spacy
 from tqdm import tqdm
+from logger import setup_logger
 
-# python -m spacy download en_core_web_sm
-nlp = spacy.load("en_core_web_sm")
+# Initialize logger
+logger = setup_logger()
+
+# python -m spacy download en_core_web_lg
+# https://spacy.io/models/en#en_core_web_lg
+nlp = spacy.load("en_core_web_lg")
 
 
 def rule_based_clean(name):
@@ -90,8 +95,11 @@ def clean_dataset_column(df, column_name):
     tqdm.pandas(desc="Cleaning names")
     # Rule-based cleaning
     df[column_name] = df[column_name].astype(str).progress_apply(rule_based_clean)
+    logger.info("Rule based cleaning finished...")
     # NER validation
     df[column_name] = df[column_name].progress_apply(ner_validate)
+    logger.info("Named entity recognition finished...")
+
     return df
 
 

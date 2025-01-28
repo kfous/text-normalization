@@ -4,14 +4,21 @@ In this script GPT 3.5-turbo which provided decent results.
 """ ""
 import time
 import timeit
+import regex
 import pandas as pd
+
+from logger import setup_logger
 from performance import calculate_performance
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain.schema.messages import HumanMessage, SystemMessage
 from dotenv import load_dotenv
 
+# Init logger
+logger = setup_logger()
 
+
+# Function responsible for calling normalizer per chunk size
 def normalize_batch(raw_text):
     return [normalizer(line) for line in raw_text]
 
@@ -55,20 +62,26 @@ def normalizer(raw_text) -> str:
 
     if not raw_text:
         return ""
-    MAX_NAME_LENGTH = 100
-    INVALID_CONTENT = {'output: n/a', 'output: "n/a"','output: *n/a*'}
+    MAX_NAME_LENGTH = 150  # ~120 was the biggest value
+    # A pattern which checks for an output: <A name>
+    # Taking notice for all possible scenarios, like the name will be in "" or '' or **
+    INVALID_OUTPUT_PATTERN = regex.compile(
+        r'^output:\s*["\'*]*n\/a["\'*]*$', regex.IGNORECASE
+    )
     while attempt < max_retries:
         try:
             response = chain.invoke({"text": raw_text})
             content = response.content.strip()
-            if content.casefold() in INVALID_CONTENT:
-                return 'N/A'
+            if INVALID_OUTPUT_PATTERN.match(content.casefold()):
+                return "N/A"
             # Check length
             if len(content) < MAX_NAME_LENGTH:
-                print(content)
+                # logger.info(content)
                 return content
             # if it didn't succeed start a retry mechanism
-            print(f"Wrong content: '{content}' | Attempt {attempt + 1} of {max_retries}. Retrying...")
+            # logger.info(
+            #     f"Wrong content: '{content}' | Attempt {attempt + 1} of {max_retries}. Retrying..."
+            # )
             attempt += 1
             # A retry mechanism showcasing my eagerness to get the best result
             # if the result isn't what we want retry max 3 times, with a little greater temprature
@@ -76,12 +89,12 @@ def normalizer(raw_text) -> str:
             if attempt <= max_retries:
                 chain = prompt | model.with_config(temperature=0.3)
                 backoff_time = min(attempt * 1, 2)
-                print(f"Waiting {backoff_time}s before retry...")
+                # logger.info(f"Waiting {backoff_time}s before retry...")
                 time.sleep(backoff_time)
         except Exception as e:
-            print(f"An error occurred: {e}")
+            logger.error(f"An error occurred: {e}")
             attempt += 1
-    print('N/A')
+    # logger.info("N/A")
     return "N/A"
 
 
@@ -90,14 +103,16 @@ if __name__ == "__main__":
     csv_path = "../dataset/cleaned_data.csv"
     output_csv = "../dataset/openai_cleaned_data/normalized_output.csv"
 
-    chunk_size = 50
+    # Pick a chunk size to process the dataset information
+    # Chunk size will determine the batch process capacity
+    chunk_size = 100
 
     # A flag used for the output csv, e.g. when true it will import headers
     first_chunk = True
     counter = 0
     # Performance variables saving current time
     start_time_10k = timeit.default_timer()
-    print("Operation batch insert starting...")
+    logger.info("Operation batch insert starting...")
     # Insert in chunks of 100 in database
     for chunk in pd.read_csv(csv_path, chunksize=chunk_size):
         start_time_500 = timeit.default_timer()
@@ -123,9 +138,9 @@ if __name__ == "__main__":
             )
             first_chunk = False
             counter += 1
-            print(f"Batch {counter}: Inserted", flush=True)
+            logger.info(f"Batch {counter}: Inserted")
         else:
-            print("No data returned from normalizer")
+            logger.info("No data returned from normalizer")
         end_time_500 = timeit.default_timer()
         # Performance of batch
         calculate_performance(start_time_500, end_time_500)
