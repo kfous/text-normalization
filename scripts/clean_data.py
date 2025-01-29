@@ -12,7 +12,7 @@ from tqdm import tqdm
 from logger import setup_logger
 
 # Initialize logger
-logger = setup_logger()
+logger = setup_logger('main_logger')
 
 # python -m spacy download en_core_web_lg
 # https://spacy.io/models/en#en_core_web_lg

@@ -105,7 +105,7 @@ if __name__ == "__main__":
 
     # Pick a chunk size to process the dataset information
     # Chunk size will determine the batch process capacity
-    CHUNK_SIZE = 100
+    CHUNK_SIZE = 50
 
     # A flag used for the output csv, e.g. when true it will import headers
     first_chunk = True
@@ -139,6 +139,7 @@ if __name__ == "__main__":
             first_chunk = False
             counter += 1
             logger.info(f"Batch {counter}: Inserted")
+            print(f"Batch {counter}: Inserted")
         else:
             logger.info("No data returned from normalizer")
         end_time_500 = timeit.default_timer()
